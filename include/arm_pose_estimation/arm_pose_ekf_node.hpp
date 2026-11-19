@@ -152,7 +152,9 @@ private:
     // The solver's verdict on its latest frame.
     bool keypoint_frame_valid_ = true;
 
-    // Steady-clock arrival times for the input watchdog (negative: never received).
+    // Steady-clock times for the input watchdog: node start, and the last arrival
+    // per input (negative: never received).
+    double start_time_ = 0.0;
     double last_robot_msg_time_ = -1.0;
     double last_keypoint_msg_time_ = -1.0;
 

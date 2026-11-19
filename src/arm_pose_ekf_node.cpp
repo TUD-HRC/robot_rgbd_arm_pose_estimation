@@ -29,6 +29,9 @@ constexpr double kRobotDescriptionTimeoutSec = 10.0;
 // Input watchdog: report every period; a topic quiet for longer than the timeout is missing.
 constexpr double kReportPeriodSec = 5.0;
 constexpr double kSilenceTimeoutSec = 5.0;
+// A topic with a publisher may take this long to deliver its first message (a recording starts
+// a few seconds after launch, its first keypoints later still).
+constexpr double kFirstMessageGraceSec = 10.0;
 
 // Seconds on a monotonic clock: the watchdog must work when /clock never comes.
 double steadyNowSec()
@@ -99,6 +102,7 @@ ArmPoseEkfNode::ArmPoseEkfNode()
       config_(ekf::loadEkfConfig(*this))
 {
     const auto& c = config_;
+    start_time_ = steadyNowSec();
 
     if (c.usesRobot()) {
         if (c.robot_description.empty()) {
@@ -492,9 +496,12 @@ void ArmPoseEkfNode::reportMissingInputs()
     std::vector<std::string> problems;
     const auto check = [&](const std::string& label, double last_seen, std::size_t publishers) {
         if (last_seen < 0.0) {
-            problems.push_back(label + ": " + (publishers == 0
-                ? std::string("no publisher")
-                : std::to_string(publishers) + " publisher(s) but no message received"));
+            if (publishers == 0) {
+                problems.push_back(label + ": no publisher");
+            } else if (now - start_time_ > kFirstMessageGraceSec) {
+                problems.push_back(label + ": " + std::to_string(publishers) +
+                                   " publisher(s) but no message received");
+            }
         } else if (now - last_seen > kSilenceTimeoutSec) {
             char seconds[32];
             std::snprintf(seconds, sizeof(seconds), "%.1f", now - last_seen);
