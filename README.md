@@ -1,7 +1,7 @@
 # Real-time arm pose estimation during pHRI
 
 The software of our paper "Real-Time Arm Posture Estimation During Physical Human–Robot
-Interaction via Camera–Robot Sensor Fusion", to appear at IEEE Humanoids 2026.
+Interaction via Camera–Robot Sensor Fusion".
 
 It estimates, in real time, the 7-DOF pose of a human right arm whose hand holds a robot. An
 extended Kalman filter fuses the robot-measured hand pose with arm keypoints from an RGB-D
@@ -116,13 +116,13 @@ MIT, see [LICENSE](LICENSE).
 ## Citation
 
 ```bib
-@inproceedings{armpose2026,
+@inproceedings{armpose,
   title     = {Real-Time Arm Posture Estimation During Physical Human--Robot Interaction
                via Camera--Robot Sensor Fusion},
   author    = {Hu, Yuxuan and Srivastava, Aditya and Peternel, Luka and Marchal-Crespo, Laura
                and Prendergast, J. Micah},
-  booktitle = {IEEE-RAS International Conference on Humanoid Robots (Humanoids)},
-  year      = {2026}
+  booktitle = {},
+  year      = {}
 }
 ```
 
