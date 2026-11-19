@@ -1,0 +1,71 @@
+# Arm geometry and grip of each subject.
+#
+# Lengths in m: upper arm (acromion -> lateral epicondyle), forearm (lateral
+# epicondyle -> ulnar styloid), hand (wrist -> grip centre).
+#
+# Grip offset: how the hand sits in the handle, as a rotation [x, y, z] in
+# degrees about the hand frame's own axes (applied X, then Y, then Z) on top of
+# ee_to_hand in ekf.yaml. grip_offset_<trial> is the one fitted to that
+# recording; launched with trial:=<trial> the EKF uses it, otherwise
+# grip_offset, and without either the universal grip (no offset).
+subjects:
+    subject_01:
+        upper_arm_length: 0.286
+        forearm_length: 0.214
+        hand_length: 0.093
+        grip_offset_A: [13.5, 7.2, -5.3]
+        grip_offset_B: [-2.4, 15.1, -0.4]
+    subject_02:
+        upper_arm_length: 0.321
+        forearm_length: 0.260
+        hand_length: 0.08
+        grip_offset_A: [25.1, 5.7, 12.5]
+        grip_offset_B: [12.4, 8.8, 13.7]
+    subject_03:
+        upper_arm_length: 0.322
+        forearm_length: 0.250
+        hand_length: 0.088
+        grip_offset_A: [11.6, 2.8, 8.3]
+        grip_offset_B: [8.5, 0.2, 11.4]
+    subject_04:
+        upper_arm_length: 0.349
+        forearm_length: 0.254
+        hand_length: 0.087
+        grip_offset_A: [-10.9, 4.7, 9.1]
+        grip_offset_B: [-9.9, 5.7, 2.4]
+    subject_05:
+        upper_arm_length: 0.313
+        forearm_length: 0.229
+        hand_length: 0.080
+        grip_offset_A: [-8.0, 16.6, 29.9]
+        grip_offset_B: [-10.3, 16.8, 30.4]
+    subject_06:
+        upper_arm_length: 0.324
+        forearm_length: 0.240
+        hand_length: 0.079
+        grip_offset_A: [-17.9, 13.8, 12.7]
+        grip_offset_B: [-14.4, 7.5, 2.4]
+    subject_07:
+        upper_arm_length: 0.349
+        forearm_length: 0.266
+        hand_length: 0.094
+        grip_offset_A: [23.5, -5.8, -7.7]
+        grip_offset_B: [24.8, -8.1, -6.7]
+    subject_08:
+        upper_arm_length: 0.310
+        forearm_length: 0.219
+        hand_length: 0.084
+        grip_offset_A: [-16.7, 20.6, 14.1]
+        grip_offset_B: [-25.6, 21.2, 14.4]
+    subject_09:
+        upper_arm_length: 0.323
+        forearm_length: 0.226
+        hand_length: 0.078
+        grip_offset_A: [-15.8, 3.0, 6.2]
+        grip_offset_B: [-17.0, -1.8, 10.1]
+    subject_10:
+        upper_arm_length: 0.357
+        forearm_length: 0.286
+        hand_length: 0.08
+        grip_offset_A: [13.4, 3.0, 9.6]
+        grip_offset_B: [13.9, 8.8, 8.2]

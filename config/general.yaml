@@ -1,0 +1,26 @@
+# Topics and frames, shared by every node of the pipeline.
+/**:
+  ros__parameters:
+    topics:
+      # Camera (RealSense)
+      camera_rgb: "/camera/camera/color/image_raw"
+      camera_points: "/camera/camera/depth/color/points"   # organized, aligned to the color image
+      # Vision front end
+      keypoints_2d: "/keypoints_2d"                 # MediaPipe landmarks (pixels)
+      pose_annotated: "/pose_annotated"             # image with the skeleton drawn on it
+      arm_keypoints: "/arm_keypoints"               # shoulder, elbow, wrist (camera frame)
+      arm_keypoints_valid: "/arm_keypoints_valid"   # one flag per processed camera frame
+      arm_keypoint_markers: "/arm_keypoint_markers"
+      arm_keypoints_timing: "/arm_keypoints_timing"
+      # Robot (KUKA LBR, lbr_fri_ros2_stack)
+      robot_joint_states: "/lbr/joint_states"
+      robot_description: "/lbr/robot_description"
+      # EKF output
+      ekf_joint_states: "/arm_pose_ekf/joint_states"
+      ekf_cycle_timing: "/arm_pose_ekf/cycle_timing"
+
+    frames:
+      world: "lbr_link_0"                    # robot base
+      robot_ee: "lbr_link_ee"                # link the hand holds
+      camera: "camera_depth_optical_frame"   # frame of the point cloud and the keypoints
+      arm_prefix: "upt_"                     # joints and links of the estimated arm

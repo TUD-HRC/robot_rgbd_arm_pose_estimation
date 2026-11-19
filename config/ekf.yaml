@@ -1,0 +1,39 @@
+# arm_pose_ekf parameters (topics and frames: general.yaml).
+# q = [elv_angle, shoulder_elv, shoulder_rot, elbow_flexion, pro_sup, wrist_x, wrist_z] (rad)
+arm_pose_ekf:
+  ros__parameters:
+
+    # Robot end effector -> hand frame for the handle in additional_resources/.
+    # Each subject's grip offset (subject_arm_lengths.yaml) is applied on top.
+    ee_to_hand:
+      translation: [0.0, 0.0, 0.05]                                          # m
+      rotation: [0.1875773533, 0.6735499687, -0.1043872137, 0.7072824653]   # x y z w
+
+    state:
+      initial_q: [0.0, 0.0, 0.0, 1.5708, 0.0, 0.0, 0.0]
+      initial_dq: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      initial_q_variance: 1.0
+      initial_dq_variance: 1.0
+
+    process_noise:
+      acceleration_variance: 1.0e-3   # white-noise acceleration of the constant-velocity model
+
+    # Robot joint states closer together than 1/rate are skipped.
+    max_update_rate_hz: 60.0
+    # Wait for the camera -> shoulder transform of a keypoint set.
+    tf_lookup_timeout_sec: 0.05
+
+    measurements:
+      hand_pose:
+        sigma_position: 0.03          # m
+        sigma_rotation: 0.05          # rad
+      hand_twist:
+        sigma_linear_velocity: 0.01   # m/s
+        sigma_angular_velocity: 0.03  # rad/s
+      arm_keypoints:
+        direction_sigma: 0.05         # rad, on the upper-arm and forearm directions
+        max_age_sec: 0.2              # older keypoints are not used
+      # Without vision, holds the elbow swivel the robot cannot observe.
+      self_motion_damping:
+        sigma: 1.0e-3                 # rad/s
+        singular_value_ratio: 1.0e-3  # null-space threshold of the hand Jacobian

@@ -1,0 +1,19 @@
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# colcon / ROS 2 build artifacts (if the package is built in place)
+build/
+install/
+log/
+
+# The dataset is distributed separately: only the folder's README is tracked.
+data/*
+!data/README.md

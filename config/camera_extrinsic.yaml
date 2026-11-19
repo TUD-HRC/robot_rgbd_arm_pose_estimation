@@ -1,0 +1,5 @@
+# Camera pose in the robot base frame (hand-eye calibration), published by the launch file.
+parent_frame: lbr_link_0
+child_frame: camera_depth_optical_frame
+translation: [0.0824997430108765, 0.6275998182349791, 0.11182142164325053]   # m
+rotation: [-0.5027068665858946, -0.4994623353917892, 0.4888079737887732, 0.5088122901157998]   # x y z w
