@@ -1,7 +1,5 @@
 # Real-time arm pose estimation during pHRI
-
-The software of our paper "Real-Time Arm Posture Estimation During Physical Human–Robot
-Interaction via Camera–Robot Sensor Fusion".
+The software of our paper "Real-Time Arm Posture Estimation During Robot-aided Physiotherapy via Camera–Robot Sensor Fusion". This repository is cleaned up and documented with the help of AI agent (Claude).
 
 It estimates, in real time, the 7-DOF pose of a human right arm whose hand holds a robot. An
 extended Kalman filter fuses the robot-measured hand pose with arm keypoints from an RGB-D
@@ -51,9 +49,8 @@ Everything runs from one launch file, `arm_pose_estimation.launch.py`.
 
 The 20 recordings of the study (participants 1–10, trials A and B) hold the robot's data and the
 precomputed output of the vision front end (the 3D shoulder, elbow and wrist), but no images or
-point clouds. They come with the motion-capture reference. They are not in this repository:
-download them as [data/README.md](data/README.md) says and put them into `data/`. Then play one
-by passing it as `bag`:
+point clouds. They are in [data/](data/README.md), with the motion-capture reference and the
+paper's estimates. Play one by passing it as `bag`:
 
 ```bash
 DATA=~/pose_ws/src/robot_rgbd_arm_pose_estimation/data
@@ -117,8 +114,8 @@ MIT, see [LICENSE](LICENSE).
 
 ```bib
 @inproceedings{armpose,
-  title     = {Real-Time Arm Posture Estimation During Physical Human--Robot Interaction
-               via Camera--Robot Sensor Fusion},
+  title     = {Real-Time Arm Posture Estimation For Robot-aided Physiotherapy
+               via RGB-D--Robot Sensor Fusion},
   author    = {Hu, Yuxuan and Srivastava, Aditya and Peternel, Luka and Marchal-Crespo, Laura
                and Prendergast, J. Micah},
   booktitle = {},

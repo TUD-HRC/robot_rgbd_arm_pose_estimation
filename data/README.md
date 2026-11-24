@@ -1,13 +1,14 @@
 # Data
 
-The recordings of the study are not in the git repository. Download them from
-**[TODO: organization folder link]** and put them in this folder, so that it reads:
+This folder holds the study's dataset:
 
 ```
 data/
   recordings/subject_XX_trial_Y.mcap       ROS 2 bag (MCAP, ROS 2 Jazzy)
   motion_capture/subject_XX_trial_Y.mot    reference joint angles: OpenSim inverse kinematics
   motion_capture/subject_XX_trial_Y.csv    Motive export: rigid bodies and markers, 240 Hz
+  module_outputs/subject_XX_trial_Y_<module>.csv
+                                           the paper's estimates, paired with the reference
   time_offsets.yaml                        aligns the motion capture with the recording
   SHA256SUMS                               checksums: `sha256sum -c SHA256SUMS` in this folder
 ```
@@ -63,3 +64,40 @@ The `.mot` columns that are the reference for the 7 estimated joints:
 - Not every row is a valid reference. In the paper, rows were not scored when they were one-frame
   IK flicks (more than 3° off a 37 ms running median) or steps over 5° per row; segments shorter
   than 0.25 s and 50 ms at each segment end were dropped as well.
+
+## Module outputs
+
+`module_outputs/` holds the estimates the paper evaluated: one file per recording and module, each
+row paired with its motion-capture reference.
+
+| `<module>` | |
+|---|---|
+| `fused` | the EKF with robot and camera measurements: the proposed method |
+| `robot` | the EKF with robot measurements only |
+| `camera` | the EKF with camera measurements only. It does not observe pronation–supination or the wrist (`jRightElbow_roty`, `jRightWrist_rotx`, `jRightWrist_rotz`); the paper does not score those for it |
+| `ik` | the inverse-kinematics baseline: MoveIt 2's KDL plugin, solving the robot-measured hand pose of each `fused` row |
+
+Columns: `time`, then for each of the 7 joints `gt_position.<joint>`, `est_position.<joint>`,
+and after them `gt_velocity.<joint>`, `est_velocity.<joint>`.
+
+- `time`: recording time in s, on the clock of the bags (from 1000 s). One row per estimate: every
+  EKF cycle for `fused`, `robot` and `ik` (about 59 Hz), every camera frame for `camera` (15 Hz).
+- Positions in degrees, velocities in degrees per second, joints as in the table above.
+- `gt_*`: the nearest valid `.mot` row (no interpolation), with the sign and units of the table
+  above. Velocities are the finite difference within each valid segment, then a zero-phase
+  second-order Butterworth low-pass at 6 Hz. `nan`: no valid reference row.
+- `est_*`: the module's output. The `ik` velocities are derived from its positions after the
+  run, by the same difference and filter as the reference (a non-causal filter, which an online
+  solver could not use).
+- The paper takes the error as `est − gt`, positions wrapped to [−180°, 180°). Its statistics use
+  every row that has a reference, from the start of each recording to its end. The dropout table
+  (Table II) also needs the EKF's record of which cycles had a camera update, which is not
+  included.
+
+They come from replaying each original recording in real time, with the vision front end run
+live on the camera images, and the package's EKF and configuration (each segment direction
+corrects all seven joints through its full Jacobian; participant grips and segment lengths in
+`config/subject_arm_lengths.yaml`). MediaPipe does not give identical results run to run, and
+the keypoints in the bags come from a separate run of the front end, so replaying a bag gives
+estimates close to these but not identical. The IK solver restarts from random seeds when it
+fails, so a new solve can also differ.

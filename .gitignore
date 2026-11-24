@@ -14,6 +14,5 @@ build/
 install/
 log/
 
-# The dataset is distributed separately: only the folder's README is tracked.
-data/*
-!data/README.md
+# The dataset's folders are tracked file by file; archives of them exceed GitHub's 100 MB limit.
+data/*.zip

@@ -1,0 +1,32 @@
+# Recording time (s) of motion-capture time 0, per recording: a .mot or .csv row at
+# time t is at recording time t + time_offset.
+subject_01:
+  trial_A: 999.2498748
+  trial_B: 999.4357748
+subject_02:
+  trial_A: 999.486758
+  trial_B: 998.9784563
+subject_03:
+  trial_A: 999.4164193
+  trial_B: 999.4722021
+subject_04:
+  trial_A: 999.440191
+  trial_B: 999.3940418
+subject_05:
+  trial_A: 999.4901776
+  trial_B: 999.0668943
+subject_06:
+  trial_A: 999.3104882
+  trial_B: 999.0189099
+subject_07:
+  trial_A: 999.49194
+  trial_B: 999.4383118
+subject_08:
+  trial_A: 999.4495976
+  trial_B: 999.4715519
+subject_09:
+  trial_A: 999.400394
+  trial_B: 999.4773984
+subject_10:
+  trial_A: 999.4245601
+  trial_B: 999.3306534

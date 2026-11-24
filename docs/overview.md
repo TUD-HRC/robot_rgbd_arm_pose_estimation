@@ -31,8 +31,10 @@ On a recording, the first two nodes are not run: the recording already holds the
 - **Robot updates:** the robot holds the hand, so its forward kinematics, the handle
   transform `ee_to_hand` and the subject's grip offset give the hand pose and twist. They
   update the hand position, rotation and twist of the arm model.
-- **Camera updates:** the unit upper-arm and forearm directions. The latest keypoint set is
-  applied on every cycle until a newer one arrives or it is older than 0.2 s.
+- **Camera updates:** the unit upper-arm and forearm directions. Each corrects all seven joints
+  through its full Jacobian (the forearm direction also moves with the shoulder joints). The
+  latest keypoint set is applied on every cycle until a newer one arrives or it is older than
+  0.2 s.
 - **Without vision:** the robot sees only 6 of the 7 DOF (the hand stays still while the elbow
   swivels). A pseudo-measurement then holds the swivel rate at zero (self-motion damping).
 - **Joint limits:** the URDF limits are enforced after every step by truncating the Gaussian.
